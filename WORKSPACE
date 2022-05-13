@@ -1,5 +1,9 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+# -----------------------------------------
+# archives
+# -----------------------------------------
+
 http_archive(
     name = "io_bazel_rules_go",
     sha256 = "69de5c704a05ff37862f7e0f5534d4f479418afc21806c887db544a316f3cb6b",
@@ -8,6 +12,23 @@ http_archive(
         "https://github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
     ],
 )
+
+# Commit: a0acd1779ee91022fed0e79f640c63274ab0e9ee
+# Date: 2022-05-13 02:15:12 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_docker/commit/a0acd1779ee91022fed0e79f640c63274ab0e9ee
+#
+# Remove external loaders
+# Size: 964139 (964 kB)
+http_archive(
+    name = "io_bazel_rules_docker",
+    sha256 = "89f9d96bd22121bfcf364039925d76c8f7e790e81dd89233b0a94ddf6c494d99",
+    strip_prefix = "rules_docker-a0acd1779ee91022fed0e79f640c63274ab0e9ee",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/a0acd1779ee91022fed0e79f640c63274ab0e9ee.tar.gz"],
+)
+
+# -----------------------------------------
+# rules_go
+# -----------------------------------------
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_download_sdk", "go_register_toolchains", "go_rules_dependencies")
 
@@ -20,10 +41,9 @@ go_register_toolchains()
 
 go_rules_dependencies()
 
-local_repository(
-    name = "io_bazel_rules_docker",
-    path = "/Users/pcj/go/src/github.com/bazelbuild/rules_docker",
-)
+# -----------------------------------------
+# rules_docker
+# -----------------------------------------
 
 load("@io_bazel_rules_docker//repositories:repositories.bzl", container_repositories = "repositories")
 
@@ -35,15 +55,6 @@ container_deps()
 
 load("@io_bazel_rules_docker//container:pull.bzl", "container_pull")
 load("@io_bazel_rules_docker//container:load.bzl", "container_load")
-load("@io_bazel_rules_docker//go:image.bzl", _go_image_repos = "repositories")
-
-# -----------------------------------------
-# rules_docker
-# -----------------------------------------
-
-container_repositories()
-
-_go_image_repos()
 
 container_pull(
     name = "alpine_linux_armv6_fixed_id",
