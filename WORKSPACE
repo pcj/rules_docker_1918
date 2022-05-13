@@ -13,17 +13,34 @@ http_archive(
     ],
 )
 
-# Commit: a0acd1779ee91022fed0e79f640c63274ab0e9ee
-# Date: 2022-05-13 02:15:12 +0000 UTC
-# URL: https://github.com/bazelbuild/rules_docker/commit/a0acd1779ee91022fed0e79f640c63274ab0e9ee
+# Before FF:
+
+# # Commit: a0acd1779ee91022fed0e79f640c63274ab0e9ee
+# # Date: 2022-05-13 02:15:12 +0000 UTC
+# # URL: https://github.com/bazelbuild/rules_docker/commit/a0acd1779ee91022fed0e79f640c63274ab0e9ee
+# #
+# # Remove external loaders
+# # Size: 964139 (964 kB)
+# http_archive(
+#     name = "io_bazel_rules_docker",
+#     sha256 = "89f9d96bd22121bfcf364039925d76c8f7e790e81dd89233b0a94ddf6c494d99",
+#     strip_prefix = "rules_docker-a0acd1779ee91022fed0e79f640c63274ab0e9ee",
+#     urls = ["https://github.com/bazelbuild/rules_docker/archive/a0acd1779ee91022fed0e79f640c63274ab0e9ee.tar.gz"],
+# )
+
+# After FF:
+
+# Commit: 4949e05267f52f0633a8f11e7b70e1a09ac662db
+# Date: 2022-05-13 17:16:50 +0000 UTC
+# URL: https://github.com/bazelbuild/rules_docker/commit/4949e05267f52f0633a8f11e7b70e1a09ac662db
 #
-# Remove external loaders
-# Size: 964139 (964 kB)
+# Refactor for flag
+# Size: 965371 (965 kB)
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "89f9d96bd22121bfcf364039925d76c8f7e790e81dd89233b0a94ddf6c494d99",
-    strip_prefix = "rules_docker-a0acd1779ee91022fed0e79f640c63274ab0e9ee",
-    urls = ["https://github.com/bazelbuild/rules_docker/archive/a0acd1779ee91022fed0e79f640c63274ab0e9ee.tar.gz"],
+    sha256 = "636bb551b1a6dad7ec19c52f502366fd3b1bfcf3d13329b909d4541ef3a3a9ff",
+    strip_prefix = "rules_docker-4949e05267f52f0633a8f11e7b70e1a09ac662db",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/4949e05267f52f0633a8f11e7b70e1a09ac662db.tar.gz"],
 )
 
 # -----------------------------------------
@@ -64,9 +81,11 @@ container_pull(
     os = "linux",
     registry = "index.docker.io",
     repository = "library/alpine",
+    use_precompiled_binaries = False,
 )
 
 container_load(
     name = "pause_tar",
     file = "@io_bazel_rules_docker//testdata:pause.tar",
+    use_precompiled_binaries = False,
 )
